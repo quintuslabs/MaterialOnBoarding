@@ -5,10 +5,13 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     List<WelcomeSlider> sliderList = new ArrayList<>();
     private int dotscount;
     private ImageView[] dots;
-
+    TextView getStarted;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
         prepareData();
 
         sliderDotspanel = findViewById(R.id.SliderDots);
+        getStarted = findViewById(R.id.get_started);
 
         SliderPagerAdapter viewPagerAdapter = new SliderPagerAdapter(WelcomeActivity.this, sliderList);
 
@@ -102,8 +106,10 @@ public class WelcomeActivity extends AppCompatActivity {
         final Runnable update = new Runnable() {
             public void run() {
                 if (page_position == dotscount) {
+                    getStarted.setVisibility(View.VISIBLE);
                     page_position = 0;
                 } else {
+                    getStarted.setVisibility(View.GONE);
                     page_position = page_position + 1;
                 }
                 viewPager.setCurrentItem(page_position, true);
@@ -131,4 +137,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void onGetstartedClicked(View view) {
+        Toast.makeText(getApplicationContext(), "GetStarted Clicked", Toast.LENGTH_SHORT).show();
+    }
 }
